@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect } from "react";
 import "./App.css";
 
 function App() {
@@ -18,7 +18,11 @@ function App() {
       pass += str.charAt(randomIdx);
     }
     setPassword(pass);
-  }, [length, numberAllowed, charAllowed, setPassword]);
+  }, [passLength, numberAllowed, charAllowed, setPassword]);
+
+  useEffect(()=>{
+    passGen()
+  },[passLength,numberAllowed,charAllowed,passGen])
 
   return (
     <>
@@ -31,9 +35,45 @@ function App() {
             type="text"
             value={password}
             placeholder="Password"
-            className="outline-none w-full py-1 px-3"
+            className="outline-none w-full py-1 px-3 text-gray-600"
             readOnly
           />
+          <button className='outline-none bg-blue-700 text-white px-3 py-0.5 shrink-0'>Copy</button>
+        </div>
+        <div className='flex text-sm gap-x-2'>
+          <div className='flex items-center gap-x-1'>
+            <input 
+            type="range" 
+            min={6}
+            max={100}
+            value={passLength}
+            className='cursor-pointer' 
+            onChange={(e)=>{setPassLength(e.target.value)}}
+            />
+            <label>Length: {passLength}</label>
+          </div>
+          <div className='flex items-center gap-x-1'>
+            <input 
+            type="checkbox" 
+            defaultChecked={numberAllowed}
+            id='numberInput'
+            onChange={()=>{
+              setNumberAllowed((previous) => !(previous))
+            }}
+            />
+            <label>Numbers</label>
+          </div>
+          <div className='flex items-center gap-x-1'>
+            <input 
+            type="checkbox" 
+            defaultChecked={charAllowed}
+            id='charInput'
+            onChange={()=>{
+              setcharAllowed((previous) => !(previous))
+            }}
+            />
+            <label>Characters</label>
+          </div>
         </div>
       </div>
     </>
