@@ -6,6 +6,7 @@ function App() {
   const [numberAllowed, setNumberAllowed] = useState(false);
   const [charAllowed, setcharAllowed] = useState(false);
   const [password, setPassword] = useState("");
+  const [isCcopied, setIsCopied] = useState(false);
 
   const passGen = useCallback(() => {
     let pass = "";
@@ -33,6 +34,8 @@ function App() {
     passGen();
   }, [passLength, numberAllowed, charAllowed, passGen]);
 
+  let copied = "Copy";
+
   return (
     <div className="flex justify-center items-center h-screen bg-gray-400 w-full ">
       <div className="w-[80%] my-10 max-w-xl  shadow-md rounded-lg px-4 py-3  text-white bg-gray-700">
@@ -52,7 +55,7 @@ function App() {
             className="outline-none bg-blue-700 text-white px-3 py-0.5 shrink-0 hover:bg-blue-800 focus:scale-110  "
             onClick={copyToClipboard}
           >
-            Copy
+            {copied}
           </button>
         </div>
         <div className="flex flex-col sm:flex-row text-sm gap-x-2">
