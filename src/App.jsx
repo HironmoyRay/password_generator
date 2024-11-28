@@ -6,7 +6,8 @@ function App() {
   const [numberAllowed, setNumberAllowed] = useState(false);
   const [charAllowed, setcharAllowed] = useState(false);
   const [password, setPassword] = useState("");
-  const [isCcopied, setIsCopied] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
+  let copied = "Copy";
 
   const passGen = useCallback(() => {
     let pass = "";
@@ -28,13 +29,13 @@ function App() {
     passwordRef.current?.select();
     // passwordRef.current?.setSelectionRange(0,5);
     window.navigator.clipboard.writeText(password);
-  }, [password]);
+    setIsCopied(!isCopied);
+  }, [password, isCopied]);
 
   useEffect(() => {
     passGen();
+    setIsCopied(false);
   }, [passLength, numberAllowed, charAllowed, passGen]);
-
-  let copied = "Copy";
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-400 w-full ">
@@ -55,7 +56,7 @@ function App() {
             className="outline-none bg-blue-700 text-white px-3 py-0.5 shrink-0 hover:bg-blue-800 focus:scale-110  "
             onClick={copyToClipboard}
           >
-            {copied}
+            {isCopied ? "Copied" : "Copy"}
           </button>
         </div>
         <div className="flex flex-col sm:flex-row text-sm gap-x-2">
